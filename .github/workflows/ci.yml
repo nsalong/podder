@@ -19,6 +19,7 @@ jobs:
 
       - name: Build
         run: go build -v ./...
+        env:
 
       - name: Test
         run: go test -v ./...
@@ -33,4 +34,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: podder-binary-artifact
-          path: ./.../podder.exe
+          path: podder.exe
