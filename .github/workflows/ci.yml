@@ -21,7 +21,7 @@ jobs:
         run: go build -v ./...
 
       - name: ShowFolder
-        run: ls -a
+        run: ls -a /home/runner/work/podder
 
       - name: Test
         run: go test -v ./...
