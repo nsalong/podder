@@ -20,6 +20,9 @@ jobs:
       - name: Build
         run: go build -v ./...
 
+      - name: ShowFolder
+        run: ls -a
+
       - name: Test
         run: go test -v ./...
 
@@ -33,4 +36,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: podder-binary-artifact
-          path: /home/runner/work/podder/podder/podder.exe
+          path: /home/runner/work/podder/podder.exe
