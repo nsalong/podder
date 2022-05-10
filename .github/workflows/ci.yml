@@ -18,7 +18,7 @@ jobs:
           go-version: 1.18
 
       - name: Build
-        run: go build -v ./...
+        run: go build -v
 
       - name: Test
         run: go test -v ./...
@@ -28,3 +28,9 @@ jobs:
         with:
           version: latest
           only-new-issues: false
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: podder-binary-artifact
+          path: /home/runner/work/podder/podder/podder
