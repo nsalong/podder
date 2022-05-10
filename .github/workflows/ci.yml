@@ -28,3 +28,9 @@ jobs:
         with:
           version: latest
           only-new-issues: false
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: podder-binary-artifact
+          path: ./.../podder.exe
