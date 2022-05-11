@@ -10,6 +10,6 @@ func HandleVerify() string {
 	if err != nil {
 		return fmt.Sprintf("error getting Kubernetes config: %v\n", err)
 	} else {
-		return fmt.Sprintf("Kubernetes config exists! Yay")
+		return "Kubernetes config exists! Yay"
 	}
 }
