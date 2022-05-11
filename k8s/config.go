@@ -25,9 +25,9 @@ func InitConfig(context, path string) (*rest.Config, error) {
 	}
 }
 
-func buildConfigFromFlags(context, kubeconfigPath string) (*rest.Config, error) {
+func buildConfigFromFlags(context, kubeConfigFromPath string) (*rest.Config, error) {
 	return clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
-		&clientcmd.ClientConfigLoadingRules{ExplicitPath: kubeconfigPath},
+		&clientcmd.ClientConfigLoadingRules{ExplicitPath: kubeConfigFromPath},
 		&clientcmd.ConfigOverrides{
 			CurrentContext: context,
 		}).ClientConfig()

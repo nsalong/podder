@@ -12,7 +12,7 @@ var OverridePath string
 var podderCmd = &cobra.Command{
 	Use:   "podder",
 	Short: "Podder is used to get detailed pod info",
-	Long:  `Podder is used to get detailed pof information from kubernetes`,
+	Long:  `Podder is used to get detailed pod information from kubernetes`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("")
 		fmt.Println("	P o d d e r - written by N.Salong")
