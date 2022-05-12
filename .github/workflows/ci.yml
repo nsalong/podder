@@ -18,10 +18,11 @@ jobs:
           go-version: 1.18
 
       - name: Set up kubectl
-        uses: tale/kubectl-action@v1
+        uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
         with:
-          base64-kube-config: ${{ secrets.KUBE_CONFIG }}
-      - run: kubectl get pods
+          args: get pods
 
       - name: Build
         run: go build -v
