@@ -10,6 +10,9 @@ import (
 func TestGetPods(t *testing.T) {
 	// we can ignore no pods found error, since there could not be any pods up in testing env
 	config, err := initConfig("", "")
+	if err != nil {
+		panic(err)
+	}
 	pods, err := GetPods(config)
 	if err == nil {
 		assert.NotEqual(t, 0, len(pods))
