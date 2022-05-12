@@ -20,9 +20,6 @@ jobs:
       - name: Build
         run: go build -v
 
-      - name: Deploy Mock config
-        run: touch /home/runner/.kube/config.yaml
-
       - name: Test
         run: go test -v ./...
 
