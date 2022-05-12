@@ -9,8 +9,8 @@ import (
 )
 
 func TestHandlePods_OK(t *testing.T) {
-	k8s.GetPods = func(config *rest.Config) (*k8s.PodDetailsList, error) {
-		return &k8s.PodDetailsList{}, nil
+	k8s.GetPods = func(config *rest.Config) ([]*k8s.PodDetails, error) {
+		return []*k8s.PodDetails{}, nil
 	}
 
 	res, err := HandlePods("", "")
@@ -22,7 +22,7 @@ func TestHandlePods_OK(t *testing.T) {
 func TestHandlePods_Failed(t *testing.T) {
 	testError := errors.New("test error")
 
-	k8s.GetPods = func(config *rest.Config) (*k8s.PodDetailsList, error) {
+	k8s.GetPods = func(config *rest.Config) ([]*k8s.PodDetails, error) {
 		return nil, testError
 	}
 

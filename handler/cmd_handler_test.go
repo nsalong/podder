@@ -44,8 +44,8 @@ func TestCmdHandler_HandleVerify_Failed(t *testing.T) {
 func TestCmdHandler_HandlePods_OK(t *testing.T) {
 	handler := getHandler()
 
-	k8s.GetPods = func(config *rest.Config) (*k8s.PodDetailsList, error) {
-		return &k8s.PodDetailsList{}, nil
+	k8s.GetPods = func(config *rest.Config) ([]*k8s.PodDetails, error) {
+		return []*k8s.PodDetails{}, nil
 	}
 	k8s.InitConfig = func(context, path string) (*rest.Config, error) {
 		return &rest.Config{}, nil
@@ -62,7 +62,7 @@ func TestCmdHandler_HandlePods_Failed(t *testing.T) {
 	handler := getHandler()
 	testError := errors.New("test error")
 
-	k8s.GetPods = func(config *rest.Config) (*k8s.PodDetailsList, error) {
+	k8s.GetPods = func(config *rest.Config) ([]*k8s.PodDetails, error) {
 		return nil, testError
 	}
 	k8s.InitConfig = func(context, path string) (*rest.Config, error) {

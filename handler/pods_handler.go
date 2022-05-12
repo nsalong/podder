@@ -20,10 +20,10 @@ func HandlePods(kubeContext string, overridePath string) (string, error) {
 
 }
 
-func formatPodResponse(pods *k8s.PodDetailsList) string {
+func formatPodResponse(pods []*k8s.PodDetails) string {
 	responseStr := ""
 
-	for _, pod := range pods.ListOfPodDetails {
+	for _, pod := range pods {
 		responseStr = responseStr + fmt.Sprintf("%s | %s | %s | %s | %s | %s \n",
 			pod.PodNamespace,
 			pod.PodName,

@@ -21,11 +21,7 @@ type PodDetails struct {
 	CPULimit     *resource.Quantity
 }
 
-type PodDetailsList struct {
-	ListOfPodDetails []*PodDetails
-}
-
-func getPods(config *rest.Config) (*PodDetailsList, error) {
+func getPods(config *rest.Config) ([]*PodDetails, error) {
 	clientSet, err := kubernetes.NewForConfig(config)
 	if err != nil {
 		return nil, err
@@ -40,7 +36,7 @@ func getPods(config *rest.Config) (*PodDetailsList, error) {
 		return nil, errors.New("no pods found")
 	}
 
-	var listOfPods *PodDetailsList
+	var listOfPods []*PodDetails
 
 	for _, pod := range pods.Items {
 		podDetails := &PodDetails{
@@ -52,7 +48,7 @@ func getPods(config *rest.Config) (*PodDetailsList, error) {
 			CPULimit:     pod.Spec.Overhead.Cpu(),
 		}
 
-		listOfPods.ListOfPodDetails = append(listOfPods.ListOfPodDetails, podDetails)
+		listOfPods = append(listOfPods, podDetails)
 	}
 
 	return listOfPods, nil
