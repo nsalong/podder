@@ -1,54 +1,37 @@
 package handler
 
 import (
-	"context"
 	"fmt"
-	v12 "k8s.io/api/core/v1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
 	"podder/k8s"
 )
 
-func HandlePods(kubeContext string, overridePath string) string {
+func HandlePods(kubeContext string, overridePath string) (string, error) {
 	kubeConfig, err := k8s.InitConfig(kubeContext, overridePath)
 	if err != nil {
-		return fmt.Sprintf("Failed to find k8s config, %v \n", err)
+		return "", err
 	}
 
-	clientSet, err := kubernetes.NewForConfig(kubeConfig)
+	pods, err := k8s.GetPods(kubeConfig)
 	if err != nil {
-		return fmt.Sprintf("error getting kubernetes clientSet: %v \n", err)
+		return "", err
 	}
 
-	pods, err := clientSet.CoreV1().Pods("").List(context.Background(), v1.ListOptions{})
-	if err != nil {
-		return fmt.Sprintf("error getting pods: %v \n", err)
-	}
-
-	if len(pods.Items) == 0 {
-		return fmt.Sprintf("Found no pods, context: %s", kubeContext)
-	}
-
-	for _, pod := range pods.Items {
-		fmt.Printf("%s | %s | %s | %s | %s | %s \n",
-			pod.Namespace,
-			pod.Name,
-			pod.Status.Phase,
-			findLatestImage(pod.Status.ContainerStatuses),
-			pod.Spec.Overhead.Memory(),
-			pod.Spec.Overhead.Cpu())
-	}
-
-	return ""
+	return formatPodResponse(pods), nil
 
 }
 
-func findLatestImage(containerStatuses []v12.ContainerStatus) string {
-	for _, status := range containerStatuses {
-		if status.Ready {
-			return status.Image
-		}
+func formatPodResponse(pods *k8s.PodDetailsList) string {
+	responseStr := ""
+
+	for _, pod := range pods.ListOfPodDetails {
+		responseStr = responseStr + fmt.Sprintf("%s | %s | %s | %s | %s | %s \n",
+			pod.PodNamespace,
+			pod.PodName,
+			*pod.PodStatus,
+			pod.LatestImage,
+			pod.MemoryLimit,
+			pod.CPULimit)
 	}
 
-	return "Not Found"
+	return responseStr
 }

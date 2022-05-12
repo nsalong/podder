@@ -1,15 +1,14 @@
 package handler
 
 import (
-	"fmt"
 	"podder/k8s"
 )
 
-func HandleVerify() string {
+func HandleVerify() (string, error) {
 	_, err := k8s.InitConfig("", "")
 	if err != nil {
-		return fmt.Sprintf("error getting Kubernetes config: %v\n", err)
+		return "", err
 	} else {
-		return "Kubernetes config exists! Yay"
+		return "Kubernetes config exists! Yay\n", nil
 	}
 }

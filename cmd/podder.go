@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
+	"podder/handler"
 )
+
+var Handler *handler.CmdHandler
 
 var Context string
 var OverridePath string
@@ -14,8 +17,7 @@ var podderCmd = &cobra.Command{
 	Short: "Podder is used to get detailed pod info",
 	Long:  `Podder is used to get detailed pod information from kubernetes`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("")
-		fmt.Println("	P o d d e r - written by N.Salong")
+		Handler.HandlePodder()
 	},
 }
 
@@ -27,16 +29,12 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
+	Handler = &handler.CmdHandler{Finished: false}
 
 	podderCmd.AddCommand(verifyCmd)
 
 	podsCmd.Flags().StringVarP(&Context, "context", "c", "", "Context for k8s")
 	podsCmd.Flags().StringVarP(&OverridePath, "overridePath", "p", "", "Manual k8s config override")
 	podderCmd.AddCommand(podsCmd)
-
-}
-
-func initConfig() {
 
 }

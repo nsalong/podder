@@ -7,7 +7,9 @@ import (
 	"path/filepath"
 )
 
-func InitConfig(context, path string) (*rest.Config, error) {
+var InitConfig = initConfig
+
+func initConfig(context, path string) (*rest.Config, error) {
 	if path == "" {
 		userHomeDir, err := os.UserHomeDir()
 		if err != nil {
